@@ -1,38 +1,26 @@
 package rateexchangeapp;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CurrencyImpl implements Currency{
     @Override
-    public int exchangeCurrencyData() {
-        JSONObject jsonData = new JSONObject();
+    public double exchangeCurrencyData() {
+        Map<String, Double> data = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
         try {
             URL url = new URL("https://freecurrencyapi.net/api/v2/latest?apikey=1b9dc950-67c2-11ec-818d-df835416afa6");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setInstanceFollowRedirects(false);
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("charset", "utf-8");
-            connection.connect();
-            InputStream inStream = connection.getInputStream();
-            String stringData = streamToString(inStream);
-            jsonData = new JSONObject(stringData);
-
+            Map<String, Map<String, Double>> exchangeData = mapper.readValue(url, new TypeReference<>(){});
+            data = exchangeData.get("data");
         }catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        return jsonData.getJSONObject("data").getInt("EGP");
-    }
-    private String streamToString(InputStream inputStream) {
-        return new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\\Z").next();
+        return data.get("EGP");
     }
 }
