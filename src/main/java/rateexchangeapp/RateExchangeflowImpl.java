@@ -2,7 +2,6 @@ package rateexchangeapp;
 
 import io.temporal.activity.ActivityOptions;
 import io.temporal.workflow.Workflow;
-import org.json.JSONObject;
 
 import java.time.Duration;
 
@@ -16,7 +15,7 @@ public class RateExchangeflowImpl implements RateExchangeflow{
 
     @Override
     public Double getExchangeRate(Double amount) {
-        int data = currency.exchangeCurrencyData();
+        double data = currency.exchangeCurrencyData();
         return exchangeCurrency.currencyInEgp(data,amount);
     }
 }

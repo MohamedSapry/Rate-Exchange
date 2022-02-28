@@ -8,5 +8,5 @@ import org.json.JSONObject;
 public interface exchangeCurrency {
 
     @ActivityMethod
-    Double currencyInEgp(int exchangeAmounts, Double amount);
+    Double currencyInEgp(double exchangeAmounts, Double amount);
 }

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class exchangeCurrencyImpl implements exchangeCurrency{
 
     @Override
-    public Double currencyInEgp(int exchangeAmounts, Double amount) {
+    public Double currencyInEgp(double exchangeAmounts, Double amount) {
         return amount * exchangeAmounts;
     }
 }
